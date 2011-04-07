@@ -23,7 +23,7 @@
 				
 			}
 			else {
-				echo "<div class='login'> <a href='".b::url('login', array(), array('r'=>SELF))."'>Login using GitHub</a> to ask a quetion </div>";
+				echo "<div class='login'> <a href='".b::url('login', array(), array('r'=>SELF))."'>Login using GitHub</a> to ask a question </div>";
 			}			
 		?>
 	</li>
