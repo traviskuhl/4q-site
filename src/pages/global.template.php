@@ -29,7 +29,7 @@
 			</div>
 			<div id="ft">
 				&copy; Copyright 2011 <a href="http://the.kuhl.co">the.kuhl.co</a> - 
-				developed by <a href='http://twitter.com/traviskuhl'>@traviskuhl</a> w/ <a href="http://twitter.com/rochers">@rochers</a> -
+				developed by <a href='https://github.com/traviskuhl'>@traviskuhl</a> &amp; <a href="https://github.com/traviskuhl/4q-site/blob/master/CONTRIB.md">friends</a> -
 				<a href="https://github.com/traviskuhl/4q-site">the code</a>
 			
 			</div>
