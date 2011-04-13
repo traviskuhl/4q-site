@@ -1,6 +1,7 @@
 <div class="yui3-g">
-	<div class="yui3-u-1-5">
+	<div class="yui3-u-1-4 sidebar">
 		<div class="mod">
+			<h2>Featured</h2>
 			<ul class="featured">
 				<?php
 					foreach ( new \dao\answers('get',array(array('featured'=>1),array('sort'=>array('added'=>-1)))) as $item ) {
@@ -8,18 +9,40 @@
 							<li>
 								<a href='".b::url('profile',array('name'=>$item->by->login))."'>
 									<h3>{$item->by->name}</h3>
-									<cite>{$item->job} - {$item->loc}</cite>
+									<cite>{$item->job}</cite>
+									<address>{$item->loc}</address>									
 								</a>
 							</li>						
 						";
 					}
 				?>
-				<li class="browse"><a href="{$url.browse}">Browse All Profiles</a></li>
-				<li class="submit"><a href="https://github.com/traviskuhl/4q/blob/master/README.md">Submit Your Profile</a></li>
 			</ul>	
+
+			<h2>Near You</h2>
+			<ul class="featured near">
+				<?php
+					foreach ( $near as $item ) {
+						echo "
+							<li>
+								<a href='".b::url('profile',array('name'=>$item->by->login))."'>
+									<h3>{$item->by->name}</h3>
+									<cite>{$item->job}</cite>
+									<address>{$item->loc}</address>
+								</a>
+							</li>						
+						";
+					}
+				?>			
+			</ul>
+			
+			<ul class="featured">
+				<li class="browse"><a href="{$url.browse}">Browse All Profiles</a></li>
+				<li class="submit"><a href="https://github.com/traviskuhl/4q/blob/master/README.md">Submit Your Profile</a></li>			
+			</ul>				
+			
 		</div>
 	</div>	
-	<div class="yui3-u-4-5 answers">		
+	<div class="yui3-u-3-4 answers">		
 		<div class="user">
 			<script type="text/javascript">
 			 B.add('l',function(){

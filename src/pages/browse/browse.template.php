@@ -1,5 +1,5 @@
 <div class="yui3-g">
-	<div class="yui3-u-1-5">
+	<div class="yui3-u-1-4">
 		<div class="mod">
 			<ul class="tags">
 				<?php
@@ -7,14 +7,10 @@
 						echo "<li><a data-tag='".b::makeSlug($tag)."' href='".b::url('browse',array('tag'=>$tag))."'>{$tag} <em>($num)</em></a></li>";
 					}
 				?>
-			</ul>
-			
-			<ul class="tags">
-			
-			</ul>
+			</ul>			
 		</div>
 	</div>	
-	<div class="yui3-u-4-5">
+	<div class="yui3-u-3-4">
 		
 		<ul class="browse">
 			<?php

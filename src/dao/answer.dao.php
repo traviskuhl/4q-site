@@ -19,7 +19,8 @@ class answer extends Mongo {
 			'commit' => array(),			
 			'text' => array(),
 			'tags' => array(),
-			'featured' => array( 'default' => 0 )
+			'featured' => array( 'default' => 0 ),
+			'll' => array()
 		);		
 	}
 

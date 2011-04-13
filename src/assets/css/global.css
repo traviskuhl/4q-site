@@ -8,7 +8,13 @@ html, body {
 	background: #f9f9f9;
 	color: #333;
 	text-shadow: #fff 1px 1px 1px;	
+	height: 100.1%;
+	
+	background: -moz-linear-gradient(top, #ffffff 40%, #f9f9f9 100%); 
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(40%,#fff), color-stop(100%,#f9f9f9)); 
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f9f9f9',GradientType=0 );
 }
+
 
 
 #hd {
@@ -89,10 +95,10 @@ html, body {
 
 #doc #bd .mod {
 	margin-top: 20px;
-	border-right: solid 2px #eee;
+	border-right: solid 1px #eee;
 	text-align: right;
 	position: fixed;
-	width: 160px;
+	width: 220px;
 	padding: 10px 0 10px 10px;
 }
 
@@ -109,13 +115,17 @@ html, body {
 #doc #bd .mod p a:hover { color: #3a75d7; }
 
 
-#bd h2.featured {
-	font-family: BigCaslon;
+#bd .sidebar h2 {
+	text-align: left;
 	font-weight: bold;
-	font-size: 165%;
 	text-shadow: #fff 1px 1px 2px;
 	color: #888;
-	margin-bottom: 10px;
+	padding: 5px;
+	border-bottom: solid 1px #eee;
+}
+
+#bd ul.featured  {
+	margin-bottom: 15px;
 }
 
 #bd ul.featured li {
@@ -144,6 +154,11 @@ html, body {
 
 #bd ul.featured li cite {
 	font-size: 93%;
+	color: #777;
+}
+
+#bd ul.featured li address {
+	font-size: 85%;
 	color: #777;
 }
 
@@ -342,29 +357,53 @@ html, body {
 
 #bd .user img {
 	float: left;
-	margin-right: 20px;
 	border: solid 2px #fff;
 	-webkit-box-shadow: 0 0 5px #999;
 	-moz-box-shadow: 0 0 5px #999;
-	width: 100px;
-	height: 100px;
+	width: 80px;
+	height: 80px;
 }
 
 #bd .user ul {
 	padding: 0;
-	margin: 0;
+	margin: 30px 0 0 100px;
 }
 
 #bd .user ul li {
 	list-style: none;
 	margin: 0;
-	padding: 0 3px;
+	padding: 0 ;
+	float: left;
+	width: 32%;
+	font-size: 77%;
+	text-align: center;
 }
 
 #bd .user ul li em {
-	font-size: 197%;
+	font-size: 30px;
 	font-weight: bold;
+	display: block;
 }
+
+#doc #bd .user a.btn {
+	display: block;
+	float: right;
+	border: solid 1px #ccc;
+	padding: 5px 13px;
+	margin-left: 5px;
+	color: #333;
+	font-weight: bold;
+	font-size: 93%;
+	
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	
+	background: -moz-linear-gradient(top, #ffffff 40%, #eee 100%); 
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eee), color-stop(100%,#e5e5e5)); 
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f9f9f9',GradientType=0 );	
+}
+
+#bd .user ul li a:hover {text-decoration: none;}
 
 ul.browse {
 	margin-top: 20px;
@@ -427,7 +466,7 @@ ul.browse li.hide { display: none; }
 
 
 
-
+#bd .user ul:after,
 #bd .answers .ask ul li form div.content:after,
 #bd .answers .ask ul li:after,
 #ft:after, #hd:after,

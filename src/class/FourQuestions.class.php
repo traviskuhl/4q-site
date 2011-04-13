@@ -28,6 +28,32 @@ class FourQuestions extends Bolt {
 			}
 			
 		}
+		
+		// gookie
+		$ll = b::getCookie('ll');
+	
+		// no ll
+		if ( !$ll ) {
+		
+			// simple geo
+			require_once 'Services/SimpleGeo.php';
+
+			// client
+			$client = new Services_SimpleGeo('jpjT4K5fABgmPY3YN8kpp8HyZ2t2VwwE','YufFWeKLHYc2gjz7yFG6j7ywC9ZcQaqz');
+			
+			// do it 
+			$resp = $client->getContextFromIpAddress(IP);
+			
+			// save them
+			$ll = array($resp->query->latitude, $resp->query->longitude);
+		
+			// save them
+			b::setCookie('ll', $ll, b::SecondsInYear);
+		
+		}
+	
+		// globalize
+		b::__('ll', $ll, true);
 	
 	}
 

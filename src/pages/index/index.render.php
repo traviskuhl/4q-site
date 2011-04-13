@@ -67,6 +67,15 @@ class index extends FrontEnd {
 		// h1
 		$args['h1'] = "<b>for</b> <h1><a href='".b::url('profile',array('name'=>$args['answer']->by->login))."'>{$args['answer']->by->name}</a></h1>";
 	
+	
+		// near
+		$args['near'] = new \dao\answers('get',
+			array(
+				array( 'll' => array('$near'=> b::_('ll')) ), 
+				array('per'=>5)
+			)
+		);
+	
 		// render
 		return Controller::renderPage(
 			"index/index",
@@ -110,7 +119,7 @@ class index extends FrontEnd {
 		// what was added
 		foreach ( $files as $added ) {
 		
-			if ( !$added ) { continue; }
+			if ( !$added OR $added == 'questions.md' OR $added == 'README.md' ) { continue; }
 			
 			// lets get what they added
 			$cmd = "curl -Ls https://github.com/traviskuhl/4q/raw/master/{$added}";
@@ -131,9 +140,12 @@ class index extends FrontEnd {
 				// loop and find tags
 				foreach ( $lines as $i => $line ) {
 					if ( trim(strtolower($line)) == '## tags' ) { unset($lines[$i]); $t = true; }
-					else if ( $t ) { 						
-						$tags[] = trim(str_replace('*','',$line));
-						unset($lines[$i]);
+					else if ( $t ) { 					
+						$tg = trim(str_replace('*','',$line));
+						if ( $tg )	 {
+							$tags[] = $tg;
+							unset($lines[$i]);
+						}
 					}
 					else if ( trim(strtolower($line)) == '## about you' ) { $lines[$i] = "## About {$c['committer']['name']}"; }
 					else if ( substr(trim(strtolower($line)),0,8) == '## bonus' ) {
@@ -170,6 +182,18 @@ class index extends FrontEnd {
 				'display' => $tags,
 				'search' => array_map(function($i){ return strtolower(b::makeSlug($i)); }, $tags)
 			);
+			
+			// simple geo
+			require_once 'Services/SimpleGeo.php';
+
+			// client
+			$client = new Services_SimpleGeo('jpjT4K5fABgmPY3YN8kpp8HyZ2t2VwwE','YufFWeKLHYc2gjz7yFG6j7ywC9ZcQaqz');
+			
+			// do it 
+			$resp = $client->getContextFromAddress($ht);
+			
+			// save them
+			$a->ll = array($resp->query->latitude, $resp->query->longitude);
 			
 			// save
 			$a->save();
@@ -209,6 +233,8 @@ class index extends FrontEnd {
 		// html
 		$html = "
 			<b></b>
+			<a class='btn' href='https://github.com/users/follow?target={$u['login']}'>Follow</a> 
+			<a class='btn' href='https://github.com/inbox/new/{$u['login']}'>Message</a>			
 			<a href='$url'><img src='{$a->pic}'></a>
 			<ul>
 				<li><a href='$url/repositories'><em>".number_format($u['public_repo_count'])."</em> Repos</a></li>
