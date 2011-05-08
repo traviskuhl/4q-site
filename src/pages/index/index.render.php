@@ -149,11 +149,14 @@ class index extends FrontEnd {
 			$lines = explode("\n", $answers);
 			
 			// name
-			$c['committer']['name'] = trim($lines[0],'#');			
+			$c['committer']['name'] = trim(trim($lines[0],'#'));
 			
 			// tags
 			$tags = array();
 			$t = 0;
+			
+			// first name
+			$fn = array_shift(explode(" ", trim($c['committer']['name'])));
 			
 				// loop and find tags
 				foreach ( $lines as $i => $line ) {
@@ -167,7 +170,7 @@ class index extends FrontEnd {
 					}
 					else if ( trim(strtolower($line)) == '## about you' ) { $lines[$i] = "## About {$c['committer']['name']}"; }
 					else if ( substr(trim(strtolower($line)),0,8) == '## bonus' ) {
-						$lines[$i] = str_replace("Bonus: Answer your own question:", "Bonus - asked by {$c['committer']['name']}: ", $line);
+						$lines[$i] = str_replace("Bonus: Answer your own question:", "Bonus - asked by {$fn}: ", $line);
 					}
 				}
 		
