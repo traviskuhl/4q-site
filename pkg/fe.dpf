@@ -7,6 +7,7 @@ pear = /home/bolt/share/pear/fq
 conf = /home/bolt/conf/httpd/
 assets = /home/bolt/share/htdocs/assets/fq
 config = /home/bolt/config/
+var = /home/bolt/var/fq/
 
 # meta data
 meta project = fq
@@ -30,6 +31,7 @@ set mongo.db
 set mongo.user
 set mongo.pass
 set oauth.secret
+set oauth.key 921c8b248c8135bc90f3
 
 # directorys
 dir - - - $(htdocs)
@@ -42,6 +44,9 @@ find - - - $(assets) $(src)/assets/ -depth -name "*.*"
 
 # pear
 find - - - $(pear)	$(src)/ -depth -name "*.php"
+
+# var 
+file - - - $(var)  ./warhol.manifest
 
 # set our conf file
 settings $(conf)	../conf/fq.conf

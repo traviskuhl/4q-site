@@ -1,25 +1,22 @@
-@font-face { 
-  font-family: "BigCaslon";
-  src: url(../fonts/BigCaslon.ttf) format("truetype");
-}
-
 html, body { 
 	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	background: #f9f9f9;
 	color: #333;
 	text-shadow: #fff 1px 1px 1px;	
+	min-height: 100.1%;
 	height: 100.1%;
-	
+}
+
+#doc{	
 	background: -moz-linear-gradient(top, #ffffff 40%, #f9f9f9 100%); 
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(40%,#fff), color-stop(100%,#f9f9f9)); 
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f9f9f9',GradientType=0 );
 }
 
 
-
 #hd {
 	position: fixed;
-	padding: 20px 0;
+	padding: 10px 0;
 	font-family: 'Droid Serif';
 	background: #fff;
 	border-bottom: solid 2px #eee;
@@ -90,7 +87,7 @@ html, body {
 #doc #bd {
 	width: 1024px;
 	margin: 0 auto;
-	padding: 100px 0;
+	padding: 70px 0;
 }
 
 #doc #bd .mod {
@@ -186,12 +183,17 @@ html, body {
 #bd ul.featured li.browse a {
 	color: #888;
 	padding: 0 10px;
+	line-height: 17px;	
 }
 
 #bd ul.featured li.submit a:hover,
 #bd ul.featured li.browse a:hover {
-	background: transparent;
-	color: #333;
+	color: #333;	
+	background-color: transparent;
+}
+
+#bd ul.featured li.submit a:hover {
+	background: url(../images/gh-icon.png) no-repeat 80px top;
 }
 
 #bd .answers h2 {
@@ -272,7 +274,7 @@ html, body {
 }
 
 #bd .answers .ask ul li.post textarea {
-	width: 520px;
+	width: 480px;
 	height: 50px;
 	padding: 5px;
 	border: none;
@@ -293,7 +295,7 @@ html, body {
 	clear: both;
 	float: left;
 	cursor: pointer;
-	margin: 5px 0 0 480px;
+	margin: 5px 0 0 440px;
 }
 
 #bd .answers .ask ul li .avatar {
@@ -442,7 +444,9 @@ ul.browse li div {
 
 ul.browse li.hide { display: none; }
 
-
+.fb {
+	padding: 10px;
+}
 
 #ft {
 	position: fixed;

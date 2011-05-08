@@ -3,6 +3,41 @@
 class FourQuestions extends Bolt {
 
 	public static function start() {
+	
+		if ( !bDevMode ) {
+			
+			// cid
+			$cid = "fq.assets";	
+		
+			// manifest
+			if ( ($manifest = apc_fetch($cid) ) == false ) { 
+			
+				// get it 
+				$manifest = json_decode(file_get_contents("/home/bolt/var/fq/warhol.manifest"),true);
+				
+				// save it 
+				apc_store($cid, $manifest);
+				
+			}	
+			
+			// embeds
+			$embeds = b::_("embeds");
+		
+			// update
+			foreach ( $embeds['js'] as $k => $x ) {
+				$name = key($x);
+				if ( $name == 'bolt-project-fq' ) { 
+					$embeds['js'][$k][$name] = $manifest['fq.js']['static'];
+				}
+			}
+			
+			// embeds
+			$embeds['css'][0] = $manifest['css']['static'];
+						
+			// reset
+			b::__('embeds', $embeds);
+			
+		}
 		
 		// see if they have a session
 		$cs = b::getCookie('$site/cookieUserSession');
@@ -58,6 +93,7 @@ class FourQuestions extends Bolt {
 	}
 
 	public static function preRoute(&$page) {
+					
 			
 		// no pages
 		if ( in_array($page, array('ajax','xhr')) ) { return; }

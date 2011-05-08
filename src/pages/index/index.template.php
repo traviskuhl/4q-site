@@ -4,7 +4,7 @@
 			<h2>Featured</h2>
 			<ul class="featured">
 				<?php
-					foreach ( new \dao\answers('get',array(array('featured'=>1),array('sort'=>array('added'=>-1)))) as $item ) {
+					foreach ( new \dao\answers('get',array(array('featured'=>1),array('sort'=>array('added'=>-1),'per'=>3))) as $item ) {
 						echo "
 							<li>
 								<a href='".b::url('profile',array('name'=>$item->by->login))."'>
@@ -51,13 +51,17 @@
 			</script>
 		</div>
 		<?php echo $answer->text->html ?>	
-		
+			
 		<cite class="info">
 			<strong>Authored:</strong> <?php echo $answer->ago('commit_author'); ?> (<?php echo date('m/d/y g:ia',$answer->commit->author); ?>) | 
 			<strong>Committed:</strong> <?php echo $answer->ago('commit_date'); ?> (<?php echo date('m/d/y g:ia',$answer->commit->date); ?>) |
 			<a target="_new" href="https://github.com{$answer.commit.url}">Commit</a> (<?php echo substr($answer->commit->id,0,20); ?>) |
 			<a target="_new" href="https://github.com/traviskuhl/4q/raw/master/{$answer.commit.file}">Raw</a>
-		</cite>
+		</cite>	
+		
+		<div class="fb">
+			<iframe src="http://www.facebook.com/plugins/like.php?href=<?php echo urlencode(SELF); ?>&amp;send=true&amp;layout=standard&amp;width=450&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:80px;" allowTransparency="true"></iframe>
+		</div>		
 		
 		<div class="ask">
 			<h3>Ask {$answer.by.name} a Question</h3>

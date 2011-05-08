@@ -27,7 +27,7 @@ class comments extends Mongo {
 		$sth = $this->query('comments', $query, $args);
 			
 		// give it back
-		foreach ( $sth as $e ) {
+		foreach ( $sth as $e ) {		
 			$this->_items[$e['_id']] = new commentitem('set', $e);
 		}
 	

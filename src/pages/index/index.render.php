@@ -62,7 +62,7 @@ class index extends FrontEnd {
 			}
 	
 		// ansers
-		$args['answer'] = $sth->item(0);
+		$args['answer'] = $a = $sth->item(0);
 	
 		// h1
 		$args['h1'] = "<b>for</b> <h1><a href='".b::url('profile',array('name'=>$args['answer']->by->login))."'>{$args['answer']->by->name}</a></h1>";
@@ -75,6 +75,24 @@ class index extends FrontEnd {
 				array('per'=>5)
 			)
 		);
+	
+		// add a title
+		$args['metaTitle'] = "for " . trim($a->by->name);
+		
+		// url
+		$url = b::url('profile',array('name'=>$args['answer']->by->login));
+		
+		// extra head
+		$args['extraHead'] = '
+			<link rel="canonical" href="'.$url.'" /> 
+		    <meta property="og:title" content="FourQuestions for '.trim($a->by->name).'"/>
+		    <meta property="og:type" content="website"/>
+		    <meta property="og:url" content="'.$url.'"/>
+		    <meta property="og:image" content="'.$a->pic.'"/>
+		    <meta property="og:site_name" content="FourQuestions"/>
+		    <meta property="fb:admins" content="503173345"/>
+		    <meta property="og:description" content="Four simple questions to learn more about developers and the things they make. Powered by GitHub.com"/>
+		';
 	
 		// render
 		return Controller::renderPage(
@@ -216,39 +234,49 @@ class index extends FrontEnd {
 		// a
 		$a = new \dao\answer('get',array('id', $id));
 		
-		// get me some xhr
-		$ws = new Webservice(array(
-			'host' => 'github.com'
-		));
+		// find out if we have this user in cache
+		$cid = "gh.user.{$id}";
 		
-		// call it 
-		$r = $ws->sendRequest("api/v2/json/user/show/".$a->by->login);
+		if ( ($html = $this->cache->get($cid)) == false ) {
+			
+			// get me some xhr
+			$ws = new Webservice(array(
+				'host' => 'github.com'
+			));
+			
+			// call it 
+			$r = $ws->sendRequest("api/v2/json/user/show/".$a->by->login);
+			
+			// user
+			$u = $r['user'];
+			
+			// url
+			$url = "https://github.com/{$u['login']}";
+			
+			// html
+			$html = "
+				<b></b>
+				<a class='btn' href='https://github.com/users/follow?target={$u['login']}'>Follow</a> 
+				<a class='btn' href='https://github.com/inbox/new/{$u['login']}'>Message</a>			
+				<a href='$url'><img src='{$a->pic}'></a>
+				<ul>
+					<li><a href='$url/repositories'><em>".number_format($u['public_repo_count'])."</em> Repos</a></li>
+					<li><a href='$url/following'><em>".number_format($u['following_count'])."</em> Following</a></li>
+					<li><a href='$url/followers'><em>".number_format($u['followers_count'])."</em> Followers</a></li>				
+				</ul>
+			";
+			
+			// tags
+			$tags = $a->tags->display->asArray();
+			
+			// tags
+			if ( count($tags) > 0 ) {
+				$html .= "<div>Tags: ".implode(", ", array_map(function($i){ return "<a href='".b::url('browse',array('tag'=>$i))."'>$i</a>"; }, $tags));
+			}
 		
-		// user
-		$u = $r['user'];
-		
-		// url
-		$url = "https://github.com/{$u['login']}";
-		
-		// html
-		$html = "
-			<b></b>
-			<a class='btn' href='https://github.com/users/follow?target={$u['login']}'>Follow</a> 
-			<a class='btn' href='https://github.com/inbox/new/{$u['login']}'>Message</a>			
-			<a href='$url'><img src='{$a->pic}'></a>
-			<ul>
-				<li><a href='$url/repositories'><em>".number_format($u['public_repo_count'])."</em> Repos</a></li>
-				<li><a href='$url/following'><em>".number_format($u['following_count'])."</em> Following</a></li>
-				<li><a href='$url/followers'><em>".number_format($u['followers_count'])."</em> Followers</a></li>				
-			</ul>
-		";
-		
-		// tags
-		$tags = $a->tags->display->asArray();
-		
-		// tags
-		if ( count($tags) > 0 ) {
-			$html .= "<div>Tags: ".implode(", ", array_map(function($i){ return "<a href='".b::url('browse',array('tag'=>$i))."'>$i</a>"; }, $tags));
+			// save
+			$this->cache->set($cid, $html, 60*30);
+			
 		}
 		
 		// print the response

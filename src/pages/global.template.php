@@ -2,11 +2,12 @@
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<title>fourqu.es/tions</title>
+		<title>fourqu.es/tions {$metaTitle}</title>
 		<link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.2.0/build/cssfonts/fonts-min.css&3.2.0/build/cssreset/reset-min.css&3.2.0/build/cssgrids/grids-min.css">				
 		{$cssEmbeds}			
-		<script src="<?php echo URI; ?>assets/bolt/js/global.js"></script>    					
+		<script src="<?php echo b::_('bolt-global'); ?>"></script>    					
+		{$extraHead}
 	</head>
 	<body class="{$bodyClass}">
 		<div id="doc">

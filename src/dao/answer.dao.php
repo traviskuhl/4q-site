@@ -31,9 +31,21 @@ class answer extends Mongo {
 
 		// lets get it 
 		$q = array( $by => $val );
+		
+		// cid
+		$cid = "answer.{$val}";
+		
+		// if by = id
+		if ( $by != '_id' OR ($row = $this->cache->get($cid)) == false ) {
 
-		// do ti 
-		$row = $this->row('answers', $q);
+			// do ti 
+			$row = $this->row('answers', $q);
+			
+			// save
+			$this->cache->set($cid, $row);
+		
+		}
+	
 
 			// no row
 			if ( !$row ) { return false; }
@@ -70,6 +82,9 @@ class answer extends Mongo {
 		
 		// save id 
 		$this->id = $id;
+		
+			// delete the cache
+			$this->cache->delete("answer.{$id}");
 	
 		// return id
 		return $id;
